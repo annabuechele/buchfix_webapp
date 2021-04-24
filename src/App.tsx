@@ -2,19 +2,26 @@ import React from "react";
 import logo from "./logo.svg";
 import "./App.css";
 import ReCAPTCHA from "react-google-recaptcha";
-import axios from "axios";
+import axios, { AxiosError } from "axios";
 
 function App() {
-  const [state, setstate] = React.useState("no nix");
+  const [state, setstate] = React.useState<any>("no nix");
   const recaptchaRef: any = React.useRef(null);
   let token: any;
   const onSubmitReCaptcha = async (event: any) => {
     event.preventDefault();
     token = await recaptchaRef.current.getValue();
-    setstate(token);
-    await axios.post("http://localhost:42069/recaptcha/verify", {
-      token: token,
-    });
+
+    const result: any = await axios
+      .post("http://localhost:8080/user/new", {
+        token: token,
+      })
+      .catch((err: AxiosError) => {
+        setstate(err.message);
+      });
+    if (result) {
+      setstate(result.data);
+    }
   };
 
   return (
