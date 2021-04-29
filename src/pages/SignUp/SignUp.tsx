@@ -10,13 +10,13 @@ function SignIn() {
   const recaptchaRef: any = React.useRef(null);
   let token: any;
   const user: UserType = {
-    username: "patrickcerny",
-    email: "patrick.cerny04@gmail.com",
+    username: "patrickcernyy",
+    email: "patrick.cerny04@gmail.comm",
     location: {
       city: "Bregenz",
       country: "Österreich",
       number: "1",
-      street: null,
+      street: "1",
       state: "Vorarlberg",
       zipCode: "6900",
     },
