@@ -5,6 +5,8 @@ import Button from "@material-ui/core/Button";
 import { Link } from "react-router-dom";
 import "./LogIn.scss";
 import Logo from "../../images/Logo_Buchfix.png";
+import { inject, observer } from "mobx-react";
+import { authStore } from "../../stores/authStore";
 
 function LogIn() {
   const [username, setUsername] = useState<string>("");
@@ -44,4 +46,4 @@ function LogIn() {
   );
 }
 
-export default LogIn;
+export default inject("authStore")(observer(LogIn));
