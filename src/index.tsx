@@ -4,6 +4,7 @@ import "./index.scss";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core";
+require("dotenv").config();
 
 let theme = createMuiTheme({
   typography: { fontSize: 12, fontFamily: "Roboto" },

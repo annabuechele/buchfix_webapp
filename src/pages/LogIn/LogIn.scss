@@ -1,0 +1,32 @@
+.main-wrapper-login {
+  height: 100%;
+  width: 100%;
+  background-image: url("../../images/background-image-login.jpeg");
+  display: flex;
+  align-items: center;
+  position: absolute;
+}
+.logInContainer {
+  display: flex;
+  flex-direction: column;
+  width: 550px;
+  height: 500px;
+  background-color: rgba($color: #ffffff, $alpha: 0.8);
+  align-items: center;
+  margin: auto;
+  vertical-align: center;
+  border-radius: 5px;
+  justify-content: center;
+}
+#Logo_image {
+  width: 250px;
+  height: 100px;
+}
+#alreadyLogIn {
+  font-family: Roboto;
+  font-size: 8pt;
+  color: #442220;
+}
+#jetztanmeldenA {
+  color: #442220;
+}
