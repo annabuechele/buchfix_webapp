@@ -1,5 +1,6 @@
 import React from "react";
 import "./App.scss";
+import NavBar from "./components/NavBar/NavBar";
 import {
   BrowserRouter as Router,
   Switch,
@@ -21,6 +22,7 @@ const pages = {
 function App() {
   return (
     <div className="App">
+      <NavBar></NavBar>
       <Router>
         <Switch>
           <Route exact path="/" component={() => <pages.home />} />
