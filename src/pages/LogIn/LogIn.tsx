@@ -38,7 +38,12 @@ function LogIn() {
             Jetzt anmelden
           </Link>
         </p>
-        <Button color="primary" id="buttonSubmit" variant="contained">
+        <Button
+          color="primary"
+          id="buttonSubmit"
+          variant="contained"
+          onClick={(e) => {}}
+        >
           log in
         </Button>
       </div>

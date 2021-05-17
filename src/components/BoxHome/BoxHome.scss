@@ -1,0 +1,29 @@
+.box-container {
+  height: 440px;
+  width: 230px;
+  background-color: rgba($color: #ffffff, $alpha: 0.8);
+  border-radius: 5px;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  font-family: Roboto;
+  padding: 35px;
+}
+#img-box {
+  width: 230px;
+  height: 150px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-radius: 5px;
+}
+#heading-box {
+  font-size: 17pt;
+  color: #442220;
+}
+#text-box {
+  text-align: justify;
+}
+#seeMore-box {
+  color: transparent;
+  border-bottom: 1px solid #442220;
+}

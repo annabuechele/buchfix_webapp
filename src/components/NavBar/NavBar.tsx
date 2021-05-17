@@ -14,11 +14,11 @@ function NavBar() {
       <div className="search-wrapper">
         <SearchIcon></SearchIcon>
       </div>
-      <div id="icon-right-wrapper">
-        <ShoppingBasketIcon></ShoppingBasketIcon>
-        <VisibilityIcon></VisibilityIcon>
-        <EventNoteIcon></EventNoteIcon>
-        <ExitToAppIcon></ExitToAppIcon>
+      <div className="icon-wrapper">
+        <ShoppingBasketIcon className="icons"></ShoppingBasketIcon>
+        <VisibilityIcon className="icons"></VisibilityIcon>
+        <EventNoteIcon className="icons"></EventNoteIcon>
+        <ExitToAppIcon className="icons"></ExitToAppIcon>
       </div>
     </div>
   );
