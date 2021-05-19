@@ -61,12 +61,10 @@ function SignIn() {
       return false;
     return true;
   };
-  useEffect(() => {});
   const handleRecapchaChange = () => {
     setRecaptchaValid(true);
   };
   const checkLocationData: () => boolean = () => {
-    console.log("sfhsdhfs");
     if (street && housenumber && city && postalcode && state) return false;
     return true;
   };
@@ -80,8 +78,62 @@ function SignIn() {
     setStep(1);
   };
 
-  switch (step) {
-    case 1:
+  useEffect(() => {
+    if (step === 0)
+      setformToRender(
+        <>
+          <TextField
+            className="textField-signin"
+            label="Straße"
+            required={true}
+            onChange={(e) => {
+              setStreet(e.target.value);
+            }}
+          />
+          <TextField
+            className="textField-signin"
+            label="Hausnummer"
+            required={true}
+            onChange={(e) => {
+              setHousenumber(e.target.value);
+            }}
+          />
+          <TextField
+            className="textField-signin"
+            label="Ort"
+            required={true}
+            onChange={(e) => {
+              setCity(e.target.value);
+            }}
+          />
+          <TextField
+            className="textField-signin"
+            label="PLZ"
+            required={true}
+            onChange={(e) => {
+              setPostalcode(e.target.value);
+            }}
+          />
+          <TextField
+            className="textField-signin"
+            label="Land"
+            required={true}
+            onChange={(e) => {
+              setState(e.target.value);
+            }}
+          />
+          <Button
+            color="primary"
+            id="buttonNext"
+            variant="contained"
+            disabled={checkLocationData()}
+            onClick={setStepOne} // Funktion ausführen
+          >
+            weiter
+          </Button>
+        </>
+      );
+    else
       setformToRender(
         <>
           <TextField
@@ -164,61 +216,143 @@ function SignIn() {
           </form>
         </>
       );
-      break;
 
-    case 0:
-      setformToRender(
-        <>
-          <TextField
-            className="textField-signin"
-            label="Straße"
-            required={true}
-            onChange={(e) => {}}
-          />
-          <TextField
-            className="textField-signin"
-            label="Hausnummer"
-            required={true}
-            onChange={(e) => {}}
-          />
-          <TextField
-            className="textField-signin"
-            label="Ort"
-            required={true}
-            onChange={(e) => {}}
-          />
-          <TextField
-            className="textField-signin"
-            label="PLZ"
-            required={true}
-            onChange={(e) => {}}
-          />
-          <TextField
-            className="textField-signin"
-            label="Land"
-            required={true}
-            onChange={(e) => {}}
-          />
-          <Button
-            color="primary"
-            id="buttonNext"
-            variant="contained"
-            disabled={checkLocationData()}
-            onClick={setStepOne} // Funktion ausführen
-          >
-            weiter
-          </Button>
-        </>
-      );
-      break;
-  }
-
-  useEffect(() => {
-    setStep(0);
     return () => {};
   }, []);
 
-  console.log(formToRender);
+  // switch (step) {
+  //   case 1:
+  //     setformToRender(
+  //       <>
+  //         <TextField
+  //           className="textField-signin"
+  //           label="Vorname"
+  //           value={firstname}
+  //           required={true}
+  //           onChange={(e) => {
+  //             //OnChange wenn verändert dann in state speichern
+  //             setFirstname(e.target.value);
+  //           }}
+  //         />
+  //         <TextField
+  //           className="textField-signin"
+  //           value={lastname}
+  //           label="Zuname"
+  //           required={true}
+  //           onChange={(e) => {
+  //             setLastname(e.target.value);
+  //           }}
+  //         />
+  //         <TextField
+  //           className="textField-signin"
+  //           value={email}
+  //           label="E-Mail"
+  //           required={true}
+  //           onChange={(e) => {
+  //             setEmail(e.target.value);
+  //           }}
+  //         />
+  //         <TextField
+  //           className="textField-signin"
+  //           value={username}
+  //           label="Benutzername"
+  //           required={true}
+  //           onChange={(e) => {
+  //             setUsername(e.target.value);
+  //           }}
+  //         />
+  //         <TextField
+  //           className="textField-signin"
+  //           value={password}
+  //           label="Passwort"
+  //           required={true}
+  //           onChange={(e) => {
+  //             setPassword(e.target.value);
+  //           }}
+  //         />
+  //         <TextField
+  //           className="textField-signin"
+  //           label="Passwort wiederholen"
+  //           required={true}
+  //           onChange={(e) => {
+  //             setPasswordRepeat(e.target.value);
+  //           }}
+  //           value={passwordRepeat}
+  //         />
+  //         <p id="alreadySignUp">
+  //           schon registriert?{" "}
+  //           <Link to="/login" id="jetztanmeldenA">
+  //             Jetzt anmelden
+  //           </Link>
+  //         </p>
+
+  //         <form onSubmit={onSubmitReCaptcha} id="formOnSubmit">
+  //           <ReCAPTCHA
+  //             sitekey="6LdJPbgaAAAAAMX1THjQk1i-24MelgOvL3SnrOOF"
+  //             onChange={handleRecapchaChange} //Funktion mitgeben
+  //             hl="de-AT"
+  //             ref={recaptchaRef}
+  //           ></ReCAPTCHA>
+  //           <Button
+  //             color="primary"
+  //             id="buttonSubmit"
+  //             variant="contained"
+  //             disabled={checkValideData()} // Funktion ausführen
+  //           >
+  //             sign in
+  //           </Button>
+  //         </form>
+  //       </>
+  //     );
+  //     break;
+
+  //   case 0:
+  //     setformToRender(
+  //       <>
+  //         <TextField
+  //           className="textField-signin"
+  //           label="Straße"
+  //           required={true}
+  //           onChange={(e) => {}}
+  //         />
+  //         <TextField
+  //           className="textField-signin"
+  //           label="Hausnummer"
+  //           required={true}
+  //           onChange={(e) => {}}
+  //         />
+  //         <TextField
+  //           className="textField-signin"
+  //           label="Ort"
+  //           required={true}
+  //           onChange={(e) => {}}
+  //         />
+  //         <TextField
+  //           className="textField-signin"
+  //           label="PLZ"
+  //           required={true}
+  //           onChange={(e) => {}}
+  //         />
+  //         <TextField
+  //           className="textField-signin"
+  //           label="Land"
+  //           required={true}
+  //           onChange={(e) => {}}
+  //         />
+  //         <Button
+  //           color="primary"
+  //           id="buttonNext"
+  //           variant="contained"
+  //           disabled={checkLocationData()}
+  //           onClick={setStepOne} // Funktion ausführen
+  //         >
+  //           weiter
+  //         </Button>
+  //       </>
+  //     );
+  //     break;
+  // }
+
   return (
     <div className="main-wrapper-signup">
       <div className="signInContainer">{formToRender}</div>

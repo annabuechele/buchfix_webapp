@@ -7,10 +7,26 @@ import "./LogIn.scss";
 import Logo from "../../images/Logo_Buchfix.png";
 import { inject, observer } from "mobx-react";
 import { authStore } from "../../stores/authStore";
+import axios from "axios";
+import { betterRequests } from "../../helpers/buchfixRequest";
 
 function LogIn() {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [error, setError] = useState<boolean>(false);
+  const handleLogin = async () => {
+    if (!password || !username) return setError(true);
+    const loginRes = axios
+      .post("https://auth.buchfix.at/authenticate/login", {
+        username: username,
+        password: password,
+      })
+      .catch((err) => {
+        console.log("versvhcisss");
+      });
+
+    betterRequests.get("");
+  };
   return (
     <div className="main-wrapper-login">
       <div className="logInContainer">
@@ -19,7 +35,9 @@ function LogIn() {
           className="textField"
           label="Benutzername"
           required={true}
+          error={error}
           onChange={(e) => {
+            setError(false);
             //OnChange wenn verändert dann in state speichern
             setUsername(e.target.value);
           }}
@@ -28,7 +46,9 @@ function LogIn() {
           className="textField"
           label="Passwort"
           required={true}
+          error={error}
           onChange={(e) => {
+            setError(false);
             setPassword(e.target.value);
           }}
         />
@@ -42,7 +62,7 @@ function LogIn() {
           color="primary"
           id="buttonSubmit"
           variant="contained"
-          onClick={(e) => {}}
+          onClick={handleLogin}
         >
           log in
         </Button>
