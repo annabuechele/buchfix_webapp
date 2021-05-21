@@ -9,6 +9,8 @@ import EventNoteIcon from "@material-ui/icons/EventNote";
 import Button from "@material-ui/core/Button";
 import { link } from "fs";
 import { IconButton } from "@material-ui/core";
+import { authStore } from "../../stores/authStore";
+import { inject, observer } from "mobx-react";
 
 function NavBar() {
   return (
@@ -29,7 +31,7 @@ function NavBar() {
         <IconButton className="button-icon">
           <EventNoteIcon className="icons"></EventNoteIcon>
         </IconButton>
-        <IconButton className="button-icon">
+        <IconButton className="button-icon" onClick={authStore.logOut}>
           <ExitToAppIcon className="icons"></ExitToAppIcon>
         </IconButton>
       </div>
@@ -37,4 +39,4 @@ function NavBar() {
   );
 }
 
-export default NavBar;
+export default inject("authStore")(observer(NavBar));

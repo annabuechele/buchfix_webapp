@@ -2,30 +2,43 @@ import React, { useState } from "react";
 import ReCAPTCHA from "react-google-recaptcha";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import "./LogIn.scss";
 import Logo from "../../images/Logo_Buchfix.png";
 import { inject, observer } from "mobx-react";
 import { authStore } from "../../stores/authStore";
+
 import axios from "axios";
+
 import { betterRequests } from "../../helpers/buchfixRequest";
+import { tokenStore } from "../../stores/tokenStore";
 
 function LogIn() {
   const [username, setUsername] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [error, setError] = useState<boolean>(false);
+  const history = useHistory();
+
   const handleLogin = async () => {
     if (!password || !username) return setError(true);
-    const loginRes = axios
-      .post("https://auth.buchfix.at/authenticate/login", {
+    const loginRes: any = await axios
+      .post("http://localhost:42069/authenticate/login", {
         username: username,
         password: password,
       })
       .catch((err) => {
         console.log("versvhcisss");
       });
-
-    betterRequests.get("");
+    tokenStore.setAccessToken(loginRes.data.accessToken);
+    tokenStore.setRefreshToken(loginRes.data.refreshToken);
+    console.log(tokenStore.accessToken, tokenStore.refreshToken);
+    const user = await betterRequests
+      .post("http://localhost:8080/user/getfulldata", {})
+      .catch((error) => {
+        console.log("error bam user holen", error);
+      });
+    authStore.setUser(user.data);
+    history.push("/oasdfosadkfbdsa");
   };
   return (
     <div className="main-wrapper-login">
@@ -54,7 +67,7 @@ function LogIn() {
         />
         <p id="alreadyLogIn">
           noch keinen Account?
-          <Link to="/login" id="jetztanmeldenA">
+          <Link to="/signup" id="jetztanmeldenA">
             Jetzt anmelden
           </Link>
         </p>
@@ -71,4 +84,4 @@ function LogIn() {
   );
 }
 
-export default inject("authStore")(observer(LogIn));
+export default inject("authStore", "tokenStore")(observer(LogIn));

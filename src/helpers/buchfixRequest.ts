@@ -37,9 +37,10 @@ class BetterRequests {
     } else {
       config.headers.authorization = `BEARER ${tokenStore.accessToken}`;
     }
-
+    
     let request = await axios.get(url, config).catch(async (err) => {
-      if (err.response.status === 403) {
+      if(err){
+       
         const refreshData = await getNewAccessToken(tokenStore.refreshToken);
         tokenStore.setAccessToken(refreshData);
         if (!config) config = {};
@@ -48,7 +49,9 @@ class BetterRequests {
         return await axios.get(url, config).catch((err) => {
           throw new Error(err);
         });
-      } else throw new Error(err);
+      
+    }
+     
     });
 
     return request;
@@ -71,20 +74,23 @@ class BetterRequests {
     } else {
       config.headers.authorization = `BEARER ${tokenStore.accessToken}`;
     }
-    console.log(config);
+
     let request = await axios.post(url, data, config).catch(async (err) => {
-      if (err.response.status === 401) {
-        const refreshData = await getNewAccessToken(tokenStore.refreshToken);
-        tokenStore.setAccessToken(refreshData);
-        if (!config) config = {};
-        config.headers.authorization = `BEARER ${refreshData}`;
-
-        return await axios.post(url, data, config).catch((err) => {
-          throw new Error(err);
-        });
-      } else throw new Error(err);
+      
+      if(err){
+       
+          const refreshData = await getNewAccessToken(tokenStore.refreshToken);
+          tokenStore.setAccessToken(refreshData);
+          if (!config) config = {};
+          config.headers.authorization = `BEARER ${refreshData}`;
+          
+  
+          return await axios.post(url, data, config).catch((err) => {
+            throw new Error(err);
+          });
+        
+      }
     });
-
     return request;
   };
 
@@ -94,9 +100,8 @@ class BetterRequests {
    */
   public delete: (
     url: string,
-    data: any,
     config?: AxiosRequestConfig
-  ) => Promise<any> = async (url, data, config) => {
+  ) => Promise<any> = async (url,  config) => {
     if (!config) config = {};
     if (!config.headers) {
       config.headers = {
@@ -107,7 +112,8 @@ class BetterRequests {
     }
 
     let request = await axios.delete(url, config).catch(async (err) => {
-      if (err.response.status === 403) {
+      if(err){
+       
         const refreshData = await getNewAccessToken(tokenStore.refreshToken);
         tokenStore.setAccessToken(refreshData);
         if (!config) config = {};
@@ -116,7 +122,8 @@ class BetterRequests {
         return await axios.delete(url, config).catch((err) => {
           throw new Error(err);
         });
-      } else throw new Error(err);
+      
+    }
     });
 
     return request;
@@ -140,16 +147,18 @@ class BetterRequests {
     }
 
     let request = await axios.patch(url, data, config).catch(async (err) => {
-      if (err.response.status === 403) {
+      if(err){
+       
         const refreshData = await getNewAccessToken(tokenStore.refreshToken);
         tokenStore.setAccessToken(refreshData);
         if (!config) config = {};
         config.headers.authorization = `BEARER ${refreshData}`;
 
-        return await axios.patch(url, data, config).catch((err) => {
+        return await axios.patch(url, config).catch((err) => {
           throw new Error(err);
         });
-      } else throw new Error(err);
+      
+    }
     });
 
     return request;

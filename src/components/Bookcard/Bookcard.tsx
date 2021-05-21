@@ -1,21 +1,60 @@
 import React from "react";
 import "./Bookcard.scss";
-import ProductImage from "../../images/HarryPotter4.jpg";
+
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
+import {
+  Card,
+  CardActionArea,
+  CardMedia,
+  Button,
+  CardActions,
+  CardContent,
+  Typography,
+} from "@material-ui/core";
 
-function Bookcard() {
+interface BookcardProps {
+  image: any;
+  title: string;
+  description: string;
+  pages: number;
+}
+
+function Bookcard(props: BookcardProps) {
   return (
-    <div className="bookcard-container">
-      <img id="product-image" src={ProductImage} alt="" />
+    <Card className="bookcard-main">
+      <CardMedia
+        image={props.image}
+        className="card-image"
+        title="Contemplative Reptile"
+      />
+      <CardContent>
+        <Typography gutterBottom variant="h5" component="h2">
+          {props.title}
+        </Typography>
+        <Typography variant="body2" color="textSecondary" component="p">
+          {props.description}
+        </Typography>
+      </CardContent>
+      <CardActions>
+        <Button size="small" color="primary">
+          Share
+        </Button>
+        <Button size="small" color="primary">
+          Learn More
+        </Button>
+      </CardActions>
+    </Card>
+    // <div className="bookcard-container">
+    //   <img id="product-image" src={ProductImage} alt="" />
 
-      <p>Harry Potter und der gefangene von Askaban</p>
-      <div id="product-content-wrapper">
-        <VisibilityIcon></VisibilityIcon>
+    //   <p>Harry Potter und der gefangene von Askaban</p>
+    //   <div id="product-content-wrapper">
+    //     <VisibilityIcon></VisibilityIcon>
 
-        <ShoppingBasketIcon></ShoppingBasketIcon>
-      </div>
-    </div>
+    //     <ShoppingBasketIcon></ShoppingBasketIcon>
+    //   </div>
+    // </div>
   );
 }
 
