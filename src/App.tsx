@@ -9,13 +9,13 @@ import {
 } from "react-router-dom";
 
 import { authStore } from "./stores/authStore";
-import { tokenStore } from "./stores/tokenStore";
 
 //pages
 import Home from "./pages/Home/Home";
 import SignUp from "./pages/SignUp/SignUp";
 import LogIn from "./pages/LogIn/LogIn";
 import Bookview from "./pages/Bookview/Bookview";
+import Donation from "./pages/Donation/Donation";
 import { inject, observer } from "mobx-react";
 
 const pages = {
@@ -23,19 +23,21 @@ const pages = {
   logIn: LogIn,
   home: Home,
   bookview: Bookview,
+  donation: Donation,
 };
 //if () aodsdaslkflds
 
 //abfrage ? wenn true : wenn false
 function App() {
-  console.log(authStore.user, tokenStore.refreshToken, tokenStore.accessToken);
-  return authStore.user && tokenStore.refreshToken && tokenStore.accessToken ? (
+  console.log(authStore.user, authStore.refreshToken, authStore.accessToken);
+  return authStore.user && authStore.refreshToken && authStore.accessToken ? (
     <div className="App">
-      <NavBar></NavBar>
       <Router>
+        <NavBar></NavBar>
         <Switch>
-          <Route exact path="/" component={() => <pages.home />} />
           <Route exact path="/bookview" component={() => <pages.bookview />} />
+          <Route exact path="/" component={() => <pages.home />} />
+          <Route exact path="/donation" component={() => <pages.donation />} />
           <Route path="/" component={() => <Redirect to="/" />} />
         </Switch>
       </Router>
@@ -53,4 +55,4 @@ function App() {
   );
 }
 
-export default inject("authStore", "tokenStore")(observer(App));
+export default inject("authStore")(observer(App));

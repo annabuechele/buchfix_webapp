@@ -1,11 +1,12 @@
 import axios, { AxiosRequestConfig } from "axios";
-import { tokenStore } from "../stores/tokenStore";
+import { authStore } from "../stores/authStore";
+
 
 const getNewAccessToken: (refreshToken: string) => any = async (
   refreshToken
 ) => {
   const tokenResponse: any = await axios
-    .post("http://localhost:42069/authenticate/token", {
+    .post(process.env.REACT_APP_AUTH_URL + "/authenticate/token", {
       refreshToken: refreshToken,
     })
     .catch((err) => {
@@ -32,17 +33,17 @@ class BetterRequests {
     if (!config) config = {};
     if (!config.headers) {
       config.headers = {
-        authorization: `BEARER ${tokenStore.accessToken}`,
+        authorization: `BEARER ${authStore.accessToken}`,
       };
     } else {
-      config.headers.authorization = `BEARER ${tokenStore.accessToken}`;
+      config.headers.authorization = `BEARER ${authStore.accessToken}`;
     }
     
     let request = await axios.get(url, config).catch(async (err) => {
       if(err){
        
-        const refreshData = await getNewAccessToken(tokenStore.refreshToken);
-        tokenStore.setAccessToken(refreshData);
+        const refreshData = await getNewAccessToken(authStore.refreshToken);
+        authStore.setAccessToken(refreshData);
         if (!config) config = {};
         config.headers.authorization = `BEARER ${refreshData}`;
 
@@ -69,18 +70,18 @@ class BetterRequests {
     if (!config) config = {};
     if (!config.headers) {
       config.headers = {
-        authorization: `BEARER ${tokenStore.accessToken}`,
+        authorization: `BEARER ${authStore.accessToken}`,
       };
     } else {
-      config.headers.authorization = `BEARER ${tokenStore.accessToken}`;
+      config.headers.authorization = `BEARER ${authStore.accessToken}`;
     }
 
     let request = await axios.post(url, data, config).catch(async (err) => {
       
       if(err){
        
-          const refreshData = await getNewAccessToken(tokenStore.refreshToken);
-          tokenStore.setAccessToken(refreshData);
+          const refreshData = await getNewAccessToken(authStore.refreshToken);
+          authStore.setAccessToken(refreshData);
           if (!config) config = {};
           config.headers.authorization = `BEARER ${refreshData}`;
           
@@ -105,17 +106,17 @@ class BetterRequests {
     if (!config) config = {};
     if (!config.headers) {
       config.headers = {
-        authorization: `BEARER ${tokenStore.accessToken}`,
+        authorization: `BEARER ${authStore.accessToken}`,
       };
     } else {
-      config.headers.authorization = `BEARER ${tokenStore.accessToken}`;
+      config.headers.authorization = `BEARER ${authStore.accessToken}`;
     }
 
     let request = await axios.delete(url, config).catch(async (err) => {
       if(err){
        
-        const refreshData = await getNewAccessToken(tokenStore.refreshToken);
-        tokenStore.setAccessToken(refreshData);
+        const refreshData = await getNewAccessToken(authStore.refreshToken);
+        authStore.setAccessToken(refreshData);
         if (!config) config = {};
         config.headers.authorization = `BEARER ${refreshData}`;
 
@@ -140,17 +141,17 @@ class BetterRequests {
     if (!config) config = {};
     if (!config.headers) {
       config.headers = {
-        authorization: `BEARER ${tokenStore.accessToken}`,
+        authorization: `BEARER ${authStore.accessToken}`,
       };
     } else {
-      config.headers.authorization = `BEARER ${tokenStore.accessToken}`;
+      config.headers.authorization = `BEARER ${authStore.accessToken}`;
     }
 
     let request = await axios.patch(url, data, config).catch(async (err) => {
       if(err){
        
-        const refreshData = await getNewAccessToken(tokenStore.refreshToken);
-        tokenStore.setAccessToken(refreshData);
+        const refreshData = await getNewAccessToken(authStore.refreshToken);
+        authStore.setAccessToken(refreshData);
         if (!config) config = {};
         config.headers.authorization = `BEARER ${refreshData}`;
 

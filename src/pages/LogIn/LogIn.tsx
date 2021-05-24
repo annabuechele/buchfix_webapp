@@ -11,7 +11,6 @@ import { authStore } from "../../stores/authStore";
 import axios from "axios";
 
 import { betterRequests } from "../../helpers/buchfixRequest";
-import { tokenStore } from "../../stores/tokenStore";
 
 function LogIn() {
   const [username, setUsername] = useState<string>("");
@@ -21,24 +20,25 @@ function LogIn() {
 
   const handleLogin = async () => {
     if (!password || !username) return setError(true);
+    console.log(process.env.REACT_APP_AUTH_URL);
     const loginRes: any = await axios
-      .post("http://localhost:42069/authenticate/login", {
+      .post(process.env.REACT_APP_AUTH_URL + "/authenticate/login", {
         username: username,
         password: password,
       })
       .catch((err) => {
         console.log("versvhcisss");
       });
-    tokenStore.setAccessToken(loginRes.data.accessToken);
-    tokenStore.setRefreshToken(loginRes.data.refreshToken);
-    console.log(tokenStore.accessToken, tokenStore.refreshToken);
+    authStore.setAccessToken(loginRes.data.accessToken);
+    authStore.setRefreshToken(loginRes.data.refreshToken);
+    console.log(authStore.accessToken, authStore.refreshToken);
     const user = await betterRequests
-      .post("http://localhost:8080/user/getfulldata", {})
+      .post(process.env.REACT_APP_API_URL + "/user/getfulldata", {})
       .catch((error) => {
         console.log("error bam user holen", error);
       });
     authStore.setUser(user.data);
-    history.push("/oasdfosadkfbdsa");
+    history.push("/");
   };
   return (
     <div className="main-wrapper-login">
@@ -84,4 +84,4 @@ function LogIn() {
   );
 }
 
-export default inject("authStore", "tokenStore")(observer(LogIn));
+export default inject("authStore")(observer(LogIn));

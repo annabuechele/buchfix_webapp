@@ -11,8 +11,12 @@ import { link } from "fs";
 import { IconButton } from "@material-ui/core";
 import { authStore } from "../../stores/authStore";
 import { inject, observer } from "mobx-react";
+import { useHistory } from "react-router-dom";
+import Drawer from "@material-ui/core/Drawer";
 
 function NavBar() {
+  const history = useHistory();
+  const handleURLChange = () => history.push("/bookview");
   return (
     <div className="NavBar-wrapper">
       <IconButton className="button-icon">
@@ -22,7 +26,7 @@ function NavBar() {
         <SearchIcon></SearchIcon>
       </div>
       <div className="icon-wrapper">
-        <IconButton className="button-icon">
+        <IconButton className="button-icon" onClick={handleURLChange}>
           <ShoppingBasketIcon className="icons"></ShoppingBasketIcon>
         </IconButton>
         <IconButton className="button-icon">

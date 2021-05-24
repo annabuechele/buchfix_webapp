@@ -12,6 +12,7 @@ import {
   CardContent,
   Typography,
 } from "@material-ui/core";
+import IconButton from "@material-ui/core/IconButton";
 
 interface BookcardProps {
   image: any;
@@ -36,13 +37,14 @@ function Bookcard(props: BookcardProps) {
           {props.description}
         </Typography>
       </CardContent>
-      <CardActions>
-        <Button size="small" color="primary">
-          Share
-        </Button>
-        <Button size="small" color="primary">
-          Learn More
-        </Button>
+      <CardActions className="icon-wrapper">
+        <IconButton>
+          <VisibilityIcon className="icons-card"></VisibilityIcon>
+        </IconButton>
+
+        <IconButton>
+          <ShoppingBasketIcon className="icons-card"></ShoppingBasketIcon>
+        </IconButton>
       </CardActions>
     </Card>
     // <div className="bookcard-container">

@@ -1,9 +1,15 @@
 .bookcard-main {
   width: 250px;
-  margin-top: 50px;
+  margin: 50px 30px 0px 30px;
 }
 .card-image {
   height: 200px;
-
   margin: auto;
+}
+.icons-card {
+  color: black;
+}
+.icon-wrapper {
+  display: flex;
+  flex-direction: row;
 }
