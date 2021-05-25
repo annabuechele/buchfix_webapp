@@ -37,9 +37,7 @@ ReactDOM.render(
   <React.StrictMode>
     <StoreProvider {...stores}>
       <ThemeProvider theme={theme}>
-        <Router>
-          <App />
-        </Router>
+        <App />
       </ThemeProvider>
     </StoreProvider>
   </React.StrictMode>,
