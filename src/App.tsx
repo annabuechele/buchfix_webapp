@@ -32,25 +32,21 @@ function App() {
   console.log(authStore.user, authStore.refreshToken, authStore.accessToken);
   return authStore.user && authStore.refreshToken && authStore.accessToken ? (
     <div className="App">
-      <Router>
-        <NavBar></NavBar>
-        <Switch>
-          <Route exact path="/bookview" component={() => <pages.bookview />} />
-          <Route exact path="/" component={() => <pages.home />} />
-          <Route exact path="/donation" component={() => <pages.donation />} />
-          <Route path="/" component={() => <Redirect to="/" />} />
-        </Switch>
-      </Router>
+      <NavBar></NavBar>
+      <Switch>
+        <Route exact path="/bookview" component={() => <pages.bookview />} />
+        <Route exact path="/" component={() => <pages.home />} />
+        <Route exact path="/donation" component={() => <pages.donation />} />
+        <Route path="/" component={() => <Redirect to="/" />} />
+      </Switch>
     </div>
   ) : (
     <div className="App">
-      <Router>
-        <Switch>
-          <Route exact path="/login" component={() => <pages.logIn />} />
-          <Route exact path="/signup" component={() => <pages.signUp />} />
-          <Route path="/" component={() => <Redirect to="/login" />} />
-        </Switch>
-      </Router>
+      <Switch>
+        <Route exact path="/login" component={() => <pages.logIn />} />
+        <Route exact path="/signup" component={() => <pages.signUp />} />
+        <Route path="/" component={() => <Redirect to="/login" />} />
+      </Switch>
     </div>
   );
 }
