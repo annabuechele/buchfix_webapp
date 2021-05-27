@@ -20,7 +20,7 @@ function LogIn() {
 
   const handleLogin = async () => {
     if (!password || !username) return setError(true);
-    console.log(process.env.REACT_APP_AUTH_URL);
+
     const loginRes: any = await axios
       .post(process.env.REACT_APP_AUTH_URL + "/authenticate/login", {
         username: username,
@@ -37,6 +37,7 @@ function LogIn() {
       .catch((error) => {
         console.log("error bam user holen", error);
       });
+
     authStore.setUser(user.data);
     history.push("/");
   };

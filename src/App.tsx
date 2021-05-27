@@ -29,7 +29,6 @@ const pages = {
 
 //abfrage ? wenn true : wenn false
 function App() {
-  console.log(authStore.user, authStore.refreshToken, authStore.accessToken);
   return authStore.user && authStore.refreshToken && authStore.accessToken ? (
     <div className="App">
       <Router>

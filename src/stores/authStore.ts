@@ -17,7 +17,7 @@ export class AuthStore {
       console.log(err);
     })
   };
-  
+
 
   @action setAccessToken: (token: string) => void = (token) => {
     this.accessToken = token;

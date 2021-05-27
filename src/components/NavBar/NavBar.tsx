@@ -17,6 +17,7 @@ import Drawer from "@material-ui/core/Drawer";
 function NavBar() {
   const history = useHistory();
   const handleURLChange = () => history.push("/bookview");
+  const handleURLChangeDonation = () => history.push("/donation");
   return (
     <div className="NavBar-wrapper">
       <IconButton className="button-icon">
@@ -29,7 +30,7 @@ function NavBar() {
         <IconButton className="button-icon" onClick={handleURLChange}>
           <ShoppingBasketIcon className="icons"></ShoppingBasketIcon>
         </IconButton>
-        <IconButton className="button-icon">
+        <IconButton className="button-icon" onClick={handleURLChangeDonation}>
           <VisibilityIcon className="icons"></VisibilityIcon>
         </IconButton>
         <IconButton className="button-icon">
