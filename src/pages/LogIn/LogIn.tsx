@@ -31,6 +31,8 @@ function LogIn() {
         console.log("versvhcisss");
       });
       const cookie = new Cookie();
+      cookie.remove("refreshToken");
+      cookie.remove("accessToken");
       cookie.set("refreshToken", loginRes.data.refreshToken)
       
       cookie.set("accessToken", loginRes.data.accessToken)
