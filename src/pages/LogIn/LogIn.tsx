@@ -7,6 +7,7 @@ import "./LogIn.scss";
 import Logo from "../../images/Logo_Buchfix.png";
 import { inject, observer } from "mobx-react";
 import { authStore } from "../../stores/authStore";
+import Cookie from "universal-cookie"
 
 import axios from "axios";
 
@@ -29,9 +30,12 @@ function LogIn() {
       .catch((err) => {
         console.log("versvhcisss");
       });
-    authStore.setAccessToken(loginRes.data.accessToken);
-    authStore.setRefreshToken(loginRes.data.refreshToken);
-    console.log(authStore.accessToken, authStore.refreshToken);
+      const cookie = new Cookie();
+      cookie.set("refreshToken", loginRes.data.refreshToken)
+      
+      cookie.set("accessToken", loginRes.data.accessToken)
+      console.log(cookie.get("refreshToken"), cookie.get("accessToken"));
+
     const user = await betterRequests
       .post(process.env.REACT_APP_API_URL + "/user/getfulldata", {})
       .catch((error) => {

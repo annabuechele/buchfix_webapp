@@ -1,6 +1,7 @@
 import axios, { AxiosError, AxiosRequestConfig } from "axios";
-import { authStore } from "../stores/authStore";
+import Cookie from "universal-cookie";
 
+const cookie = new Cookie();
 const getNewAccessToken: (refreshToken: string) => any = async (
   refreshToken
 ) => {
@@ -30,15 +31,15 @@ class BetterRequests {
       if (!config) config = {};
       if (!config.headers)
         config.headers = {
-          authorization: `BEARER ${authStore.accessToken}`,
+          authorization: `BEARER ${cookie.get("accessToken")}`,
         };
-      else config.headers.authorization = `BEARER ${authStore.accessToken}`;
+      else config.headers.authorization = `BEARER ${cookie.get("accessToken")}`;
 
       let firstRequest = await axios
         .get(url, config)
         .catch(async (firstRequestError: AxiosError) => {
-          const newAccessToken = getNewAccessToken(authStore.refreshToken);
-          authStore.setAccessToken(newAccessToken);
+          const newAccessToken = getNewAccessToken(cookie.get("refreshToken"));
+          cookie.set("accessToken", newAccessToken);
           if (!config) config = {};
           config.headers.authorization = `BEARER ${newAccessToken}`;
           return await axios
@@ -63,15 +64,15 @@ class BetterRequests {
     if (!config) config = {};
     if (!config.headers)
       config.headers = {
-        authorization: `BEARER ${authStore.accessToken}`,
+        authorization: `BEARER ${cookie.get("accessToken")}`,
       };
-    else config.headers.authorization = `BEARER ${authStore.accessToken}`;
+    else config.headers.authorization = `BEARER ${cookie.get("accessToken")}`;
 
     let firstRequest = await axios
       .post(url, data, config)
       .catch(async (firstRequestError: AxiosError) => {
-        const newAccessToken = getNewAccessToken(authStore.refreshToken);
-        authStore.setAccessToken(newAccessToken);
+        const newAccessToken = getNewAccessToken(cookie.get("refreshToken"));
+        cookie.set("accessToken", newAccessToken);
         if (!config) config = {};
         config.headers.authorization = `BEARER ${newAccessToken}`;
         return await axios
@@ -92,16 +93,18 @@ class BetterRequests {
       if (!config) config = {};
       if (!config.headers) {
         config.headers = {
-          authorization: `BEARER ${authStore.accessToken}`,
+          authorization: `BEARER ${cookie.get("accessToken")}`,
         };
       } else {
-        config.headers.authorization = `BEARER ${authStore.accessToken}`;
+        config.headers.authorization = `BEARER ${cookie.get("accessToken")}`;
       }
 
       let request = await axios.delete(url, config).catch(async (err) => {
         if (err) {
-          const refreshData = await getNewAccessToken(authStore.refreshToken);
-          authStore.setAccessToken(refreshData);
+          const refreshData = await getNewAccessToken(
+            cookie.get("refreshToken")
+          );
+          cookie.get("accessToken", refreshData);
           if (!config) config = {};
           config.headers.authorization = `BEARER ${refreshData}`;
 
@@ -125,16 +128,16 @@ class BetterRequests {
     if (!config) config = {};
     if (!config.headers) {
       config.headers = {
-        authorization: `BEARER ${authStore.accessToken}`,
+        authorization: `BEARER ${cookie.get("accessToken")}`,
       };
     } else {
-      config.headers.authorization = `BEARER ${authStore.accessToken}`;
+      config.headers.authorization = `BEARER ${cookie.get("accessToken")}`;
     }
 
     let request = await axios.patch(url, data, config).catch(async (err) => {
       if (err) {
-        const refreshData = await getNewAccessToken(authStore.refreshToken);
-        authStore.setAccessToken(refreshData);
+        const refreshData = await getNewAccessToken(cookie.get("accessToken"));
+        cookie.set("accessToken", refreshData);
         if (!config) config = {};
         config.headers.authorization = `BEARER ${refreshData}`;
 
