@@ -22,13 +22,27 @@
 }
 .search-wrapper {
   margin-left: -170px;
+  display: flex;
+  flex-direction: row;
 }
 
 .search-icon {
-  height: "100%";
-  position: "absolute";
-  pointer-events: "none";
-  display: "flex";
-  align-items: "center";
-  justify-content: "center";
+  height: 100%;
+  position: absolute;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#menue {
+  fill: white;
+  padding-left: 10px;
+}
+#textfield-searchbar {
+  padding-left: 20px;
+}
+#input-search {
+  padding-left: 20px;
+  color: white;
+  margin: 0;
 }

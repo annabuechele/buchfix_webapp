@@ -7,6 +7,7 @@ import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import EventNoteIcon from "@material-ui/icons/EventNote";
 import CloseIcon from "@material-ui/icons/Close";
+import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { link } from "fs";
 import { Divider, IconButton } from "@material-ui/core";
@@ -20,14 +21,32 @@ import {
   ListItemIcon,
   ListItemText,
 } from "@material-ui/core";
+import InputBase from "@material-ui/core/InputBase";
+
+import axios from "axios";
 
 function NavBar() {
   const [drawerState, setDrawerState] = useState(false);
+  const [searchInput, setSearchInput] = useState<string>("");
+  const [searchResults, setSearchResults] = useState<Array<any>>([]);
   const history = useHistory();
-  const handleURLChange = () => history.push("/bookview");
 
   const handleMenuClick = () => {
     setDrawerState(!drawerState);
+  };
+
+  const handleSearchChange = (e: any) => {
+    axios
+      .get(
+        process.env.REACT_APP_API_URL +
+          `/book/getsearchresult?queryItems=5&queryString=${e.target.value}`
+      )
+      .then((data) => {
+        setSearchResults(data.data);
+      });
+
+    console.log();
+    // Haupt env scheise, "/book/getsearchresult?queryItems=anzahl&queryString="state""
   };
 
   return (
@@ -38,46 +57,75 @@ function NavBar() {
             <ListItemIcon>
               <CloseIcon></CloseIcon>
             </ListItemIcon>
-            <ListItemText>Close</ListItemText>
+            <ListItemText></ListItemText>
           </ListItem>
           <Divider />
           <ListItem
             onClick={() => {
               console.log("push");
-              history.push("/donation");
+              history.push("/");
               handleMenuClick();
             }}
             button
           >
-            <ListItemIcon>
+            {/* <ListItemIcon>
               <CloseIcon></CloseIcon>
-            </ListItemIcon>
+            </ListItemIcon> */}
+            <ListItemText>Startseite</ListItemText>
+          </ListItem>
+          <ListItem
+            button
+            onClick={() => {
+              console.log("push");
+              history.push("/donation");
+              handleMenuClick();
+            }}
+          >
+            {/* <ListItemIcon>
+              <CloseIcon></CloseIcon>
+            </ListItemIcon> */}
             <ListItemText>Spenden</ListItemText>
           </ListItem>
           <ListItem
             button
             onClick={() => {
               console.log("push");
-              history.push("/");
+              history.push("/bookview");
               handleMenuClick();
             }}
           >
-            <ListItemIcon>
+            {/* <ListItemIcon>
               <CloseIcon></CloseIcon>
-            </ListItemIcon>
-            <ListItemText>Home</ListItemText>
+            </ListItemIcon> */}
+            <ListItemText>Bücherübersicht</ListItemText>
           </ListItem>
         </List>
       </Drawer>
       <div className="NavBar-wrapper">
         <IconButton className="button-icon" onClick={handleMenuClick}>
-          <MenuIcon></MenuIcon>
+          <MenuIcon id="menue"></MenuIcon>
         </IconButton>
         <div className="search-wrapper">
           <SearchIcon></SearchIcon>
+          <InputBase
+            id="input-search"
+            placeholder=" Suche..."
+            type="search"
+            // classes={{
+            //   root: "",
+            //   input: "",
+            // }}
+            inputProps={{ "aria-label": "search" }}
+            onChange={handleSearchChange}
+          />
+          <div id="searchContainer">
+            {searchResults.map((result) => {
+              return result.title;
+            })}
+          </div>
         </div>
         <div className="icon-wrapper">
-          <IconButton className="button-icon" onClick={handleURLChange}>
+          <IconButton className="button-icon">
             <ShoppingBasketIcon className="icons"></ShoppingBasketIcon>
           </IconButton>
           <IconButton className="button-icon">

@@ -17,7 +17,7 @@ import IconButton from "@material-ui/core/IconButton";
 interface BookcardProps {
   image: any;
   title: string;
-  description: string;
+
   pages: number;
 }
 
@@ -32,9 +32,6 @@ function Bookcard(props: BookcardProps) {
       <CardContent>
         <Typography gutterBottom variant="h5" component="h2">
           {props.title}
-        </Typography>
-        <Typography variant="body2" color="textSecondary" component="p">
-          {props.description}
         </Typography>
       </CardContent>
       <CardActions className="icon-wrapper">
