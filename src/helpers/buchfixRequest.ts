@@ -37,7 +37,9 @@ class BetterRequests {
       let firstRequest = await axios
         .get(url, config)
         .catch(async (firstRequestError: AxiosError) => {
-          const newAccessToken = getNewAccessToken(authStore.refreshToken);
+          
+          if(firstRequestError.response?.status === 401){
+            const newAccessToken = await getNewAccessToken(authStore.refreshToken);
           authStore.setAccessToken(newAccessToken);
           if (!config) config = {};
           config.headers.authorization = `BEARER ${newAccessToken}`;
@@ -46,6 +48,12 @@ class BetterRequests {
             .catch((secondRequestError: AxiosError) => {
               throw new Error(secondRequestError.message);
             });
+
+          }
+          else{
+            throw new Error(firstRequestError.message);
+          }
+          
         });
       return firstRequest;
     };
