@@ -24,6 +24,7 @@ import {
 import InputBase from "@material-ui/core/InputBase";
 
 import axios from "axios";
+import { betterRequests } from "../../helpers/buchfixRequest";
 
 function NavBar() {
   const [drawerState, setDrawerState] = useState(false);
@@ -36,13 +37,20 @@ function NavBar() {
   };
 
   const handleSearchChange = (e: any) => {
-    axios
+    console.log(e.target.value.length);
+    if (e.target.value.length == 1) setSearchResults([]);
+    if (e.target.value.length < 3) return;
+    betterRequests
       .get(
         process.env.REACT_APP_API_URL +
           `/book/getsearchresult?queryItems=5&queryString=${e.target.value}`
       )
       .then((data) => {
         setSearchResults(data.data);
+      })
+      .catch((err) => {
+        setSearchResults([]);
+        console.log(err);
       });
 
     console.log();
@@ -118,11 +126,6 @@ function NavBar() {
             inputProps={{ "aria-label": "search" }}
             onChange={handleSearchChange}
           />
-          <div id="searchContainer">
-            {searchResults.map((result) => {
-              return result.title;
-            })}
-          </div>
         </div>
         <div className="icon-wrapper">
           <IconButton className="button-icon">
@@ -138,6 +141,11 @@ function NavBar() {
             <ExitToAppIcon className="icons"></ExitToAppIcon>
           </IconButton>
         </div>
+      </div>
+      <div id="searchContainer">
+        {searchResults.map((result) => {
+          return <div className="searchItem">{result.title}</div>;
+        })}
       </div>
     </>
   );
