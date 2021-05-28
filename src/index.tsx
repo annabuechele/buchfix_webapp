@@ -6,6 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core";
 import { Provider as StoreProvider } from "mobx-react";
 import { authStore } from "./stores/authStore";
+import { Router } from "@material-ui/icons";
 
 require("dotenv").config();
 

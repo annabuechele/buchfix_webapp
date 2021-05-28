@@ -37,9 +37,10 @@ function LogIn() {
       .catch((error) => {
         console.log("error bam user holen", error);
       });
-
-    authStore.setUser(user.data);
-    history.push("/");
+    if (user) {
+      authStore.setUser(user.data);
+      history.push("/");
+    }
   };
   return (
     <div className="main-wrapper-login">

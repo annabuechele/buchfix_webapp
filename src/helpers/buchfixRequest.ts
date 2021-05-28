@@ -1,6 +1,5 @@
-import axios, { AxiosRequestConfig } from "axios";
+import axios, { AxiosError, AxiosRequestConfig } from "axios";
 import { authStore } from "../stores/authStore";
-
 
 const getNewAccessToken: (refreshToken: string) => any = async (
   refreshToken
@@ -15,7 +14,7 @@ const getNewAccessToken: (refreshToken: string) => any = async (
 
   if (!tokenResponse)
     throw new Error(
-      "Error: You didn't get a token back, probably a error with that lol"
+      "Error: You didn't get a token back, your refreshtoken is probably invalid"
     );
 
   return tokenResponse.data.accessToken;
@@ -26,37 +25,31 @@ class BetterRequests {
    * @param {url} URL           URL to your endpoint.
    * @param {config}           AxiosConfig Your Request config
    */
-  public get: (
-    url: string,
-    config?: AxiosRequestConfig
-  ) => Promise<any> = async (url, config) => {
-    if (!config) config = {};
-    if (!config.headers) {
-      config.headers = {
-        authorization: `BEARER ${authStore.accessToken}`,
-      };
-    } else {
-      config.headers.authorization = `BEARER ${authStore.accessToken}`;
-    }
-    
-    let request = await axios.get(url, config).catch(async (err) => {
-      if(err){
-       
-        const refreshData = await getNewAccessToken(authStore.refreshToken);
-        authStore.setAccessToken(refreshData);
-        if (!config) config = {};
-        config.headers.authorization = `BEARER ${refreshData}`;
+  public get: (url: string, config?: AxiosRequestConfig) => Promise<any> =
+    async (url, config) => {
+      if (!config) config = {};
+      if (!config.headers)
+        config.headers = {
+          authorization: `BEARER ${authStore.accessToken}`,
+        };
+      else config.headers.authorization = `BEARER ${authStore.accessToken}`;
 
-        return await axios.get(url, config).catch((err) => {
-          throw new Error(err);
+      let firstRequest = await axios
+        .get(url, config)
+        .catch(async (firstRequestError: AxiosError) => {
+          const newAccessToken = getNewAccessToken(authStore.refreshToken);
+          authStore.setAccessToken(newAccessToken);
+          if (!config) config = {};
+          config.headers.authorization = `BEARER ${newAccessToken}`;
+          return await axios
+            .get(url, config)
+            .catch((secondRequestError: AxiosError) => {
+              throw new Error(secondRequestError.message);
+            });
         });
-      
-    }
-     
-    });
+      return firstRequest;
+    };
 
-    return request;
-  };
   /**
    * @param {url} URL           URL to your endpoint.
    * @param {config}           AxiosRequestConfig Your Request config
@@ -68,67 +61,58 @@ class BetterRequests {
     config?: AxiosRequestConfig
   ) => Promise<any> = async (url, data, config) => {
     if (!config) config = {};
-    if (!config.headers) {
+    if (!config.headers)
       config.headers = {
         authorization: `BEARER ${authStore.accessToken}`,
       };
-    } else {
-      config.headers.authorization = `BEARER ${authStore.accessToken}`;
-    }
+    else config.headers.authorization = `BEARER ${authStore.accessToken}`;
 
-    let request = await axios.post(url, data, config).catch(async (err) => {
-      
-      if(err){
-       
-          const refreshData = await getNewAccessToken(authStore.refreshToken);
-          authStore.setAccessToken(refreshData);
-          if (!config) config = {};
-          config.headers.authorization = `BEARER ${refreshData}`;
-          
-  
-          return await axios.post(url, data, config).catch((err) => {
-            throw new Error(err);
+    let firstRequest = await axios
+      .post(url, data, config)
+      .catch(async (firstRequestError: AxiosError) => {
+        const newAccessToken = getNewAccessToken(authStore.refreshToken);
+        authStore.setAccessToken(newAccessToken);
+        if (!config) config = {};
+        config.headers.authorization = `BEARER ${newAccessToken}`;
+        return await axios
+          .post(url, data, config)
+          .catch((secondRequestError: AxiosError) => {
+            throw new Error(secondRequestError.message);
           });
-        
-      }
-    });
-    return request;
+      });
+    return firstRequest;
   };
 
   /**
    * @param {url} URL           URL to your endpoint.
    * @param {config}           AxiosRequestConfig Your Request config
    */
-  public delete: (
-    url: string,
-    config?: AxiosRequestConfig
-  ) => Promise<any> = async (url,  config) => {
-    if (!config) config = {};
-    if (!config.headers) {
-      config.headers = {
-        authorization: `BEARER ${authStore.accessToken}`,
-      };
-    } else {
-      config.headers.authorization = `BEARER ${authStore.accessToken}`;
-    }
+  public delete: (url: string, config?: AxiosRequestConfig) => Promise<any> =
+    async (url, config) => {
+      if (!config) config = {};
+      if (!config.headers) {
+        config.headers = {
+          authorization: `BEARER ${authStore.accessToken}`,
+        };
+      } else {
+        config.headers.authorization = `BEARER ${authStore.accessToken}`;
+      }
 
-    let request = await axios.delete(url, config).catch(async (err) => {
-      if(err){
-       
-        const refreshData = await getNewAccessToken(authStore.refreshToken);
-        authStore.setAccessToken(refreshData);
-        if (!config) config = {};
-        config.headers.authorization = `BEARER ${refreshData}`;
+      let request = await axios.delete(url, config).catch(async (err) => {
+        if (err) {
+          const refreshData = await getNewAccessToken(authStore.refreshToken);
+          authStore.setAccessToken(refreshData);
+          if (!config) config = {};
+          config.headers.authorization = `BEARER ${refreshData}`;
 
-        return await axios.delete(url, config).catch((err) => {
-          throw new Error(err);
-        });
-      
-    }
-    });
+          return await axios.delete(url, config).catch((err) => {
+            throw new Error(err);
+          });
+        }
+      });
 
-    return request;
-  };
+      return request;
+    };
   /**
    * @param {url} URL           URL to your endpoint.
    * @param {config}           AxiosRequestConfig Your Request config
@@ -148,8 +132,7 @@ class BetterRequests {
     }
 
     let request = await axios.patch(url, data, config).catch(async (err) => {
-      if(err){
-       
+      if (err) {
         const refreshData = await getNewAccessToken(authStore.refreshToken);
         authStore.setAccessToken(refreshData);
         if (!config) config = {};
@@ -158,8 +141,7 @@ class BetterRequests {
         return await axios.patch(url, config).catch((err) => {
           throw new Error(err);
         });
-      
-    }
+      }
     });
 
     return request;
