@@ -1,6 +1,6 @@
 import React from "react";
 import "./Bookcard.scss";
-
+import { useHistory } from "react-router-dom";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import {
@@ -22,6 +22,10 @@ interface BookcardProps {
 }
 
 function Bookcard(props: BookcardProps) {
+  const history = useHistory();
+  const handleURLChange = () => {
+    history.push("/ShoppingCart");
+  };
   return (
     <Card className="bookcard-main">
       <CardMedia
@@ -40,7 +44,10 @@ function Bookcard(props: BookcardProps) {
         </IconButton>
 
         <IconButton>
-          <ShoppingBasketIcon className="icons-card"></ShoppingBasketIcon>
+          <ShoppingBasketIcon
+            className="icons-card"
+            onClick={handleURLChange}
+          ></ShoppingBasketIcon>
         </IconButton>
       </CardActions>
     </Card>

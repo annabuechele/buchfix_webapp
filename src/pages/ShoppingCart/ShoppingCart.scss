@@ -1,0 +1,21 @@
+.wrapper-cart {
+  font-family: roboto;
+  background-color: #442220;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  margin: auto;
+  width: 100%;
+  height: 100%;
+}
+#cart-container {
+  background-color: white;
+  width: 90%;
+  height: 90%;
+  border-radius: 5px;
+  margin: auto;
+  text-align: center;
+}
+#heading-cart {
+  font-size: 26pt;
+}

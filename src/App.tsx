@@ -16,6 +16,8 @@ import SignUp from "./pages/SignUp/SignUp";
 import LogIn from "./pages/LogIn/LogIn";
 import Bookview from "./pages/Bookview/Bookview";
 import Donation from "./pages/Donation/Donation";
+import ShoppingCart from "./pages/ShoppingCart/ShoppingCart";
+import EyeOn from "./pages/EyeOn/EyeOn";
 import { inject, observer } from "mobx-react";
 
 const pages = {
@@ -24,6 +26,8 @@ const pages = {
   home: Home,
   bookview: Bookview,
   donation: Donation,
+  shoppingcart: ShoppingCart,
+  eyeon: EyeOn,
 };
 //if () aodsdaslkflds
 
@@ -37,6 +41,12 @@ function App() {
           <Route exact path="/bookview" component={() => <pages.bookview />} />
           <Route exact path="/" component={() => <pages.home />} />
           <Route exact path="/donation" component={() => <pages.donation />} />
+          <Route
+            exact
+            path="/shoppingcart"
+            component={() => <pages.shoppingcart />}
+          />
+          <Route exact path="/EyeOn" component={() => <pages.eyeon />} />
           <Route path="/" component={() => <Redirect to="/" />} />
         </Switch>
       </Router>

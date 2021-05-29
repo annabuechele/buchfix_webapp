@@ -36,6 +36,10 @@ function NavBar() {
     setDrawerState(!drawerState);
   };
 
+  const handleURLChange = () => {
+    history.push("/ShoppingCart");
+  };
+
   const handleSearchChange = (e: any) => {
     console.log(e.target.value.length);
     if (e.target.value.length == 1) setSearchResults([]);
@@ -129,7 +133,10 @@ function NavBar() {
         </div>
         <div className="icon-wrapper">
           <IconButton className="button-icon">
-            <ShoppingBasketIcon className="icons"></ShoppingBasketIcon>
+            <ShoppingBasketIcon
+              className="icons"
+              onClick={handleURLChange}
+            ></ShoppingBasketIcon>
           </IconButton>
           <IconButton className="button-icon">
             <VisibilityIcon className="icons"></VisibilityIcon>
