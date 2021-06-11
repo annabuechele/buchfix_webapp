@@ -6,6 +6,7 @@ import reportWebVitals from "./reportWebVitals";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core";
 import { Provider as StoreProvider } from "mobx-react";
 import { authStore } from "./stores/authStore";
+import { cartStore } from "./stores/cartStore";
 import { Router } from "@material-ui/icons";
 
 require("dotenv").config();
@@ -31,6 +32,7 @@ let theme = createMuiTheme({
 
 const stores = {
   authStore,
+  cartStore,
 };
 
 ReactDOM.render(

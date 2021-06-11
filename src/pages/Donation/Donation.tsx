@@ -168,7 +168,7 @@ function Donation() {
           type="file"
           name=""
           id=""
-          accept="png"
+          accept="image/png"
           onChange={(e: any) => {
             setImage(e.target.files[0]);
           }}

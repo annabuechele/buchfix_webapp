@@ -13,6 +13,8 @@ import {
   Typography,
 } from "@material-ui/core";
 import IconButton from "@material-ui/core/IconButton";
+import { cartStore } from "../../stores/cartStore";
+import { Book } from "@material-ui/icons";
 
 interface BookcardProps {
   image: any;
@@ -23,8 +25,8 @@ interface BookcardProps {
 
 function Bookcard(props: BookcardProps) {
   const history = useHistory();
-  const handleURLChange = () => {
-    history.push("/ShoppingCart");
+  const handleAddToCart = (book: any) => {
+    cartStore.addToCart(book);
   };
   return (
     <Card className="bookcard-main">
@@ -46,7 +48,9 @@ function Bookcard(props: BookcardProps) {
         <IconButton>
           <ShoppingBasketIcon
             className="icons-card"
-            onClick={handleURLChange}
+            onClick={() => {
+              handleAddToCart(props.title);
+            }}
           ></ShoppingBasketIcon>
         </IconButton>
       </CardActions>

@@ -7,7 +7,7 @@ import "./LogIn.scss";
 import Logo from "../../images/Logo_Buchfix.png";
 import { inject, observer } from "mobx-react";
 import { authStore } from "../../stores/authStore";
-import Cookie from "universal-cookie"
+import Cookie from "universal-cookie";
 
 import axios from "axios";
 
@@ -30,13 +30,13 @@ function LogIn() {
       .catch((err) => {
         console.log("versvhcisss");
       });
-      const cookie = new Cookie();
-      cookie.remove("refreshToken");
-      cookie.remove("accessToken");
-      cookie.set("refreshToken", loginRes.data.refreshToken)
-      
-      cookie.set("accessToken", loginRes.data.accessToken)
-      console.log(cookie.get("refreshToken"), cookie.get("accessToken"));
+    const cookie = new Cookie();
+    cookie.remove("refreshToken");
+    cookie.remove("accessToken");
+    cookie.set("refreshToken", loginRes.data.refreshToken);
+
+    cookie.set("accessToken", loginRes.data.accessToken);
+    console.log(cookie.get("refreshToken"), cookie.get("accessToken"));
 
     const user = await betterRequests
       .post(process.env.REACT_APP_API_URL + "/user/getfulldata", {})
@@ -66,6 +66,7 @@ function LogIn() {
         <TextField
           className="textField"
           label="Passwort"
+          type="password"
           required={true}
           error={error}
           onChange={(e) => {
@@ -76,7 +77,7 @@ function LogIn() {
         <p id="alreadyLogIn">
           noch keinen Account?
           <Link to="/signup" id="jetztanmeldenA">
-            Jetzt anmelden
+            Jetzt registrieren
           </Link>
         </p>
         <Button
