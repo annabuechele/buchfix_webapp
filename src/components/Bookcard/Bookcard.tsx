@@ -17,7 +17,7 @@ import { cartStore } from "../../stores/cartStore";
 import { Book } from "@material-ui/icons";
 
 interface BookcardProps {
-  image: any;
+  path: any;
   title: string;
 
   pages: number;
@@ -31,7 +31,8 @@ function Bookcard(props: BookcardProps) {
   return (
     <Card className="bookcard-main">
       <CardMedia
-        image={props.image}
+        onClick={() => history.push("/detail/" + props.title)}
+        image={props.path}
         className="card-image"
         title="Contemplative Reptile"
       />
@@ -49,22 +50,12 @@ function Bookcard(props: BookcardProps) {
           <ShoppingBasketIcon
             className="icons-card"
             onClick={() => {
-              handleAddToCart(props.title);
+              handleAddToCart({ title: props.title, path: props.path });
             }}
           ></ShoppingBasketIcon>
         </IconButton>
       </CardActions>
     </Card>
-    // <div className="bookcard-container">
-    //   <img id="product-image" src={ProductImage} alt="" />
-
-    //   <p>Harry Potter und der gefangene von Askaban</p>
-    //   <div id="product-content-wrapper">
-    //     <VisibilityIcon></VisibilityIcon>
-
-    //     <ShoppingBasketIcon></ShoppingBasketIcon>
-    //   </div>
-    // </div>
   );
 }
 

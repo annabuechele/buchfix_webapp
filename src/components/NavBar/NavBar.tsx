@@ -7,9 +7,6 @@ import ShoppingBasketIcon from "@material-ui/icons/ShoppingBasket";
 import VisibilityIcon from "@material-ui/icons/Visibility";
 import EventNoteIcon from "@material-ui/icons/EventNote";
 import CloseIcon from "@material-ui/icons/Close";
-import TextField from "@material-ui/core/TextField";
-import Button from "@material-ui/core/Button";
-import { link } from "fs";
 import { Divider, IconButton } from "@material-ui/core";
 import { authStore } from "../../stores/authStore";
 import { inject, observer } from "mobx-react";
@@ -151,7 +148,17 @@ function NavBar() {
       </div>
       <div id="searchContainer">
         {searchResults.map((result) => {
-          return <div className="searchItem">{result.title}</div>;
+          return (
+            <div
+              className="searchItem"
+              onClick={() => {
+                history.push("/detail/" + result.title);
+                setSearchResults([]);
+              }}
+            >
+              {result.title}
+            </div>
+          );
         })}
       </div>
     </>

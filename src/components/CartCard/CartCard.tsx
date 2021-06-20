@@ -17,18 +17,21 @@ import { cartStore } from "../../stores/cartStore";
 import { inject, observer } from "mobx-react";
 
 interface CartCardProps {
-  image: any;
+  path: any;
   title: string;
 }
 
 function CartCard(props: CartCardProps) {
+  console.log(props.path);
+  const history = useHistory();
   return (
     <div className="cart-wrapper">
       <Card className="bookcard-main">
         <CardMedia
-          image={props.image}
+          image={props.path}
           className="card-image"
           title="Contemplative Reptile"
+          onClick={() => history.push("/detail/" + props.title)}
         />
         <CardContent>
           <Typography gutterBottom variant="h5" component="h2">

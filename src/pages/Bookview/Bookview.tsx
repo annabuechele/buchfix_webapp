@@ -26,7 +26,7 @@ function Bookview() {
     <div className="bookview-wrapper">
       {books.map((book) => (
         <Bookcard
-          image={process.env.REACT_APP_IMAGE_HOST + book.file_name}
+          path={process.env.REACT_APP_IMAGE_HOST + book.file_name}
           title={book.title}
           pages={book.pages}
         />
